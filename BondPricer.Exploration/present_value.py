@@ -1,7 +1,6 @@
 import datetime as dt
 from typing import Optional, Dict
 import numpy as np
-import math
 from dateutil.relativedelta import relativedelta
 
 def bond_present_value(

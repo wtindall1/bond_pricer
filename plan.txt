@@ -3,9 +3,9 @@ PART 1- DESIGN:
 (python, numpy, mypy, pytest)
 
 1. Present value approach
-2. Relative price approach
-3. Arbitrage free pricing approach
-4. Stochastic calculus approach (CIR/ vasicek model)
+    1a: get the risk free rate - YTM of most similar maturity US treasury
+    1b: try YTM intead of rfr
+2. Stochastic calculus approach (CIR/ vasicek model)
 
 Yield calculations? eg YTM
 
@@ -17,10 +17,11 @@ Inputs:
 
 Outputs:
 - can return result from each approach
+- clean and dirty bond prices
 
 
 
 PART 2: IMPLEMENTATION
 
 Create API
-Store pricing in database
+Store requests / responses in database
