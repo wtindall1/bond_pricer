@@ -1,0 +1,24 @@
+PART 1- DESIGN:
+
+1. Present value approach
+2. Relative price approach
+3. Arbitrage free pricing approach
+4. Stochastic calculus approach (CIR/ vasicek model)
+
+Yield calculations? eg YTM
+
+Inputs:
+- maturity date
+- interest rate
+- face value
+- payment frequency
+
+Outputs:
+- can return result from each approach
+
+
+
+PART 2: IMPLEMENTATION
+
+Create API
+Store pricing in database
