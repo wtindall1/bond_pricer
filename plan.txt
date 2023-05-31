@@ -1,5 +1,7 @@
 PART 1- DESIGN:
 
+(python, numpy, mypy, pytest)
+
 1. Present value approach
 2. Relative price approach
 3. Arbitrage free pricing approach
