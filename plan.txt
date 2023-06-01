@@ -3,11 +3,14 @@ PART 1- DESIGN:
 (python, numpy, mypy, pytest)
 
 1. Present value approach
-    1a: get the risk free rate - YTM of most similar maturity US treasury
-    1b: try YTM intead of rfr
-2. Stochastic calculus approach (CIR/ vasicek model)
+    //1a: get the risk free rate - yield
+2. Stochastic calculus approach 
+    (model assumptions??)
+    use vasicek model to forecast short term interest rates for each cash flow
+    run multiple simulations and store bond price for each interest rate path
+    then average the prices
 
-Yield calculations? eg YTM
+
 
 Inputs:
 - maturity date
@@ -23,5 +26,18 @@ Outputs:
 
 PART 2: IMPLEMENTATION
 
-Create API
-Store requests / responses in database
+FastAPI:
+- post endpoint, returns dirty & clean price (& any calculated inputs / assumptions)
+- posts request, response, dirty & clean prices in database
+
+DB:
+- postgres
+- requests table (raw request & fields mapped out)
+- responses table (raw response & fields mapped out)
+
+
+
+
+PART 3: DEPLOYMENT
+deta space for free? fastapi docs
+
