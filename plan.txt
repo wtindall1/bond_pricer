@@ -26,6 +26,11 @@ Outputs:
 
 PART 2: IMPLEMENTATION
 
+Application:
+- bond class
+- class for each valuation method
+- tests (pytest)
+
 FastAPI:
 - post endpoint, returns dirty & clean price (& any calculated inputs / assumptions)
 - posts request, response, dirty & clean prices in database
