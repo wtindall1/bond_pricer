@@ -1,7 +1,7 @@
 import datetime as dt
 from typing import Optional, Dict
-import numpy as np
 from dateutil.relativedelta import relativedelta
+import get_treasury_yield as ust
 
 def bond_present_value(
         face_value: float,
@@ -12,14 +12,26 @@ def bond_present_value(
 
 ) -> Dict[str, float]:
     
+    today = dt.date.today()
+    
     #risk free rate - use US treasury rate if none specified
+    #find closest us treasury maturity- 3month, 2year, 5year, 7year, 10year, and 30year
+    maturities = {
+        0.25: "3month",
+        2: "2year",
+        5: "5year",
+        7: "7year",
+        10: "10year",
+        30: "30year"
+    }
+    years_to_maturity = (maturity_date - today).days / 365
+    closest_maturity = min(maturities.keys(), key=lambda x: abs(years_to_maturity - x))
     if not risk_free_rate:
-        risk_free_rate = 0.08
+        risk_free_rate = ust.get_treasury_yield(maturities[closest_maturity])
 
     #coupon payment dates
     coupon_dates = []
     current_date = maturity_date
-    today = dt.date.today()
     while current_date > today:
         coupon_dates.append(current_date)
         current_date -= relativedelta(months=12 // coupon_frequency)
@@ -55,7 +67,7 @@ def bond_present_value(
     #should we be using YTM or risk free rate?? rfr to reflect market dynamics more, ytm for long term investment value
 
 
-print(bond_present_value(100, 0.1, 4, dt.date(2023, 6, 30)))
+print(bond_present_value(100, 0.05, 4, dt.date(2030, 6, 30)))
 
 
 
