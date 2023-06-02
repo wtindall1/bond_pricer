@@ -8,6 +8,7 @@ PART 1- DESIGN:
     //- get rfr for input bond's maturity from yield curve
     - calculate risk premia 
         - average yields for bonds of each credit rating minus rfr
+            - FRED apis (series_id = right of title)
         - or use monte carlo simulation (simulate risk premia for bonds of different credit ratings)
 
 
@@ -46,7 +47,7 @@ FastAPI:
 - input validation (pydantic)
 
 DB:
-- postgres
+- local postgres
 - SQLalchemy
 - requests table (raw request & fields mapped out)
 - responses table (raw response & fields mapped out)
@@ -56,4 +57,5 @@ DB:
 
 PART 3: DEPLOYMENT
 deta space for free? fastapi docs
+- will need to host separately - Heroku or AWS free tier
 
