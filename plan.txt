@@ -7,9 +7,12 @@ PART 1- DESIGN:
     //- construct yield curve (5 requests per 5 min - store in pickle file for now, later store in db and call once per day)
     //- get rfr for input bond's maturity from yield curve
     - calculate risk premia 
-        - average yields for bonds of each credit rating minus rfr
+        - get yields for bonds of similar credit rating at diff maturities
+        - construct yield curve for that credit rating
+        - estimate yield to use as discount rate
             - FRED apis (series_id = right of title)
-        - or use monte carlo simulation (simulate risk premia for bonds of different credit ratings)
+        -DATA LIMITED
+            //- use FRED APIs to get yield proxy per credit rating
 
 
 //maybe come back to this
@@ -26,6 +29,7 @@ Inputs:
 - interest rate
 - face value
 - payment frequency
+- credit rating 
 
 Outputs:
 - can return result from each approach

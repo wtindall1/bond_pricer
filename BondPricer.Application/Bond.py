@@ -1,21 +1,30 @@
 import datetime as dt
 from typing import Optional, Dict
 from dateutil.relativedelta import relativedelta
+from CreditRating import CreditRating
 
 class Bond:
 
-    def __init__(self,
+    def __init__(self,               
         face_value: float,
         interest_rate: float,
         coupon_frequency: int, #per year
         maturity_date: dt.date,
-    ) -> Dict[str, float]:
+        credit_rating: str) -> Dict[str, float]:
         
         self.face_value = face_value
         self.interest_rate = interest_rate
         self.coupon_frequency = coupon_frequency
         self.maturity_date = maturity_date
         self.coupon = self.face_value * self.interest_rate
+
+        try:
+            self.credit_rating = CreditRating(credit_rating)
+            print(f"Valid credit rating: {self.credit_rating.name}")
+        except ValueError:
+            print("Invalid credit rating")
+
+
 
     def get_coupon_dates(self) -> None:
         self.coupon_dates = []
@@ -41,6 +50,14 @@ class Bond:
         accrued_interest = self.coupon * (num_days_accrued / days_in_coupon_period)
 
         return accrued_interest
+    
 
+    def get_proxy_yield(self):
+        ...
+    
+    
+
+
+bond = Bond(100, 0.1, 4, dt.date(2030, 6, 30), 'AAAA')
 
     

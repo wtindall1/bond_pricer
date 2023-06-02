@@ -1,14 +1,13 @@
 import datetime as dt
 from typing import Optional, Dict
 from dateutil.relativedelta import relativedelta
-import get_treasury_yield as ust
 
 def bond_present_value(
         face_value: float,
         interest_rate: float,
         coupon_frequency: int, #per year
         maturity_date: dt.date,
-        risk_free_rate: Optional[float] = None
+        discount_rate: float = 0.05
 
 ) -> Dict[str, float]:
     
@@ -26,8 +25,7 @@ def bond_present_value(
     }
     years_to_maturity = (maturity_date - today).days / 365
     closest_maturity = min(maturities.keys(), key=lambda x: abs(years_to_maturity - x))
-    if not risk_free_rate:
-        risk_free_rate = ust.get_treasury_yield(maturities[closest_maturity])
+    
 
     #coupon payment dates
     coupon_dates = []
@@ -43,8 +41,8 @@ def bond_present_value(
     coupon = face_value * interest_rate
 
     #calculate PV
-    coupons_pv = coupon * ((1 - pow((1+risk_free_rate), - num_payments)) / risk_free_rate)
-    maturity_pv = face_value * pow((1+risk_free_rate), - num_payments)
+    coupons_pv = coupon * ((1 - pow((1+discount_rate), - num_payments)) / discount_rate)
+    maturity_pv = face_value * pow((1+discount_rate), - num_payments)
     dirty_price = coupons_pv + maturity_pv
 
     #subtract accrued interest to get clean price
@@ -67,7 +65,7 @@ def bond_present_value(
     #should we be using YTM or risk free rate?? rfr to reflect market dynamics more, ytm for long term investment value
 
 
-print(bond_present_value(100, 0.05, 4, dt.date(2030, 6, 30)))
+print(bond_present_value(100, 0.05, 4, dt.date(2030, 6, 30), 0.05))
 
 
 

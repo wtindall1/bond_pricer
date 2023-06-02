@@ -1,0 +1,21 @@
+AAA
+https://fred.stlouisfed.org/series/BAMLC0A1CAAAEY
+
+AA
+https://fred.stlouisfed.org/series/BAMLC0A2CAAEY
+
+A
+https://fred.stlouisfed.org/series/BAMLC0A3CAEY
+
+BBB:
+https://fred.stlouisfed.org/series/BAMLC0A4CBBBEY
+
+BB:
+https://fred.stlouisfed.org/series/BAMLEM3BRRBBCRPIEY
+
+BB1 or lower: - high yield
+https://fred.stlouisfed.org/series/BAMLEMHBHYCRPIEY
+
+
+US Corporate IG:
+https://fred.stlouisfed.org/series/BAMLC0A0CMEY
