@@ -4,7 +4,15 @@ PART 1- DESIGN:
 
 1. Present value approach
     //1a: get the risk free rate - yield
-2. Stochastic calculus approach 
+    //- construct yield curve (5 requests per 5 min - store in pickle file for now, later store in db and call once per day)
+    //- get rfr for input bond's maturity from yield curve
+    - calculate risk premia 
+        - average yields for bonds of each credit rating minus rfr
+        - or use monte carlo simulation (simulate risk premia for bonds of different credit ratings)
+
+
+//maybe come back to this
+2. Stochastic calculus approach to interest rate forecast
     (model assumptions??)
     use vasicek model to forecast short term interest rates for each cash flow
     run multiple simulations and store bond price for each interest rate path
@@ -28,15 +36,18 @@ PART 2: IMPLEMENTATION
 
 Application:
 - bond class
+- yield curve class (store yields in db, only fetch new once daily)
 - class for each valuation method
 - tests (pytest)
 
 FastAPI:
 - post endpoint, returns dirty & clean price (& any calculated inputs / assumptions)
 - posts request, response, dirty & clean prices in database
+- input validation (pydantic)
 
 DB:
 - postgres
+- SQLalchemy
 - requests table (raw request & fields mapped out)
 - responses table (raw response & fields mapped out)
 
