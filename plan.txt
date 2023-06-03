@@ -42,15 +42,13 @@ PART 2: IMPLEMENTATION
 Application:
 - bond class
 - class for each valuation method
-- tests (pytest) 
-(- yield curve class (store yields in db, only fetch new once daily))
+- tests (pytest)
+    - test PV calc: do calculations in excel to create test cases
 
 
 FastAPI:
 - post endpoint, returns dirty & clean price (& any calculated inputs / assumptions)
 - posts request, response, dirty & clean prices in database
-- input validation eg old date, wrong date format, negative face value
-- handling for zero coupon bonds
 
 DB:
 - local postgres
@@ -69,7 +67,4 @@ deta space for free? fastapi docs
 
 
 
-
-to do:
-- zero coupon - why is it returning the face_value, not getting discounted?
 
