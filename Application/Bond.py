@@ -2,6 +2,8 @@ import datetime as dt
 from typing import Optional, Dict
 from dateutil.relativedelta import relativedelta
 from CreditRating import CreditRating
+import requests
+import json
 
 class Bond:
 
@@ -10,7 +12,8 @@ class Bond:
         interest_rate: float,
         coupon_frequency: int, #per year
         maturity_date: dt.date,
-        credit_rating: str) -> Dict[str, float]:
+        credit_rating: str
+            ) -> Dict[str, float]:
         
         self.face_value = face_value
         self.interest_rate = interest_rate
@@ -51,13 +54,56 @@ class Bond:
 
         return accrued_interest
     
+    
+    #gets proxy yield from index with similar credit rating, to use as discount rate
+    def get_proxy_yield(self) -> float:
 
-    def get_proxy_yield(self):
-        ...
+        #match creditrating to FRED series_id
+        if "AAA" in self.credit_rating.value:
+            series_id = "BAMLC0A1CAAAEY"
+        elif "AA" in self.credit_rating.value:
+            series_id = "BAMLC0A2CAAEY"
+        elif "A" in self.credit_rating.value:
+            series_id = "BAMLC0A3CAEY"
+        elif "BBB" in self.credit_rating.value:
+            series_id = "BAMLC0A4CBBBEY"
+        elif "BB" in self.credit_rating.value:
+            series_id = "BAMLEM3BRRBBCRPIEY"
+        else:
+            series_id = "BAMLEMHBHYCRPIEY"
+
+
+        #get api key from config
+        with open("C:\\Users\Will.Tindall\Projects\Bond_Pricer_Project\config.json") as f:
+            config = json.load(f)
+        api_key = config["FRED_API_KEY"]
+
+        #request data from 1 week ago, so doesn't return whole timeseries
+        observation_start = dt.date.today() - dt.timedelta(days=7)
+
+
+        url = f"https://api.stlouisfed.org/fred/series/observations?series_id={series_id}&api_key={api_key}&file_type=json&observation_start={observation_start}"
+
+        #call FRED Api
+        response = requests.get(url)
+
+        if response.status_code == 200: #successful
+            
+            data = response.json()
+            #get yield value for last observation item
+            return float(data["observations"][-1]["value"])/100
+        
+        else:
+            print("Request failed with status code:", response.status_code)
+            return
+        
+        
+
     
     
 
 
-bond = Bond(100, 0.1, 4, dt.date(2030, 6, 30), 'AAAA')
+bond = Bond(100, 0.1, 4, dt.date(2030, 6, 30), 'AAA')
+#print(bond.get_proxy_yield())
 
     

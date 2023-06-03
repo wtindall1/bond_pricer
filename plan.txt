@@ -41,7 +41,7 @@ PART 2: IMPLEMENTATION
 
 Application:
 - bond class
-- yield curve class (store yields in db, only fetch new once daily)
+(- yield curve class (store yields in db, only fetch new once daily))
 - class for each valuation method
 - tests (pytest)
 

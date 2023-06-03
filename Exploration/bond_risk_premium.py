@@ -75,6 +75,7 @@ def get_similar_bond_yield(credit_rating: CreditRating):
     print(bond_yield)
     return bond_yield
 
+
 get_similar_bond_yield('AA+')
 
 
