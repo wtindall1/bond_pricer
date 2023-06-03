@@ -41,9 +41,10 @@ PART 2: IMPLEMENTATION
 
 Application:
 - bond class
-(- yield curve class (store yields in db, only fetch new once daily))
 - class for each valuation method
-- tests (pytest)
+- tests (pytest) 
+(- yield curve class (store yields in db, only fetch new once daily))
+
 
 FastAPI:
 - post endpoint, returns dirty & clean price (& any calculated inputs / assumptions)

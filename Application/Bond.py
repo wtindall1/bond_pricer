@@ -1,5 +1,5 @@
 import datetime as dt
-from typing import Optional, Dict
+from typing import Optional, Dict, List
 from dateutil.relativedelta import relativedelta
 from CreditRating import CreditRating
 import requests
@@ -13,7 +13,7 @@ class Bond:
         coupon_frequency: int, #per year
         maturity_date: dt.date,
         credit_rating: str
-            ) -> Dict[str, float]:
+            ):
         
         self.face_value = face_value
         self.interest_rate = interest_rate
@@ -29,7 +29,7 @@ class Bond:
 
 
 
-    def get_coupon_dates(self) -> None:
+    def get_coupon_dates(self) -> List[dt.date]:
         self.coupon_dates = []
         date = self.maturity_date
         #work back from maturity date to find all future coupon dates (estimated)
@@ -56,7 +56,7 @@ class Bond:
     
     
     #gets proxy yield from index with similar credit rating, to use as discount rate
-    def get_proxy_yield(self) -> float:
+    def get_proxy_yield(self) -> Optional[float]:
 
         #match creditrating to FRED series_id
         if "AAA" in self.credit_rating.value:
@@ -74,7 +74,7 @@ class Bond:
 
 
         #get api key from config
-        with open("C:\\Users\Will.Tindall\Projects\Bond_Pricer_Project\config.json") as f:
+        with open("C:\\Users\\Will.Tindall\\Projects\\Bond_Pricer_Project\\config.json") as f:
             config = json.load(f)
         api_key = config["FRED_API_KEY"]
 
@@ -103,7 +103,7 @@ class Bond:
     
 
 
-bond = Bond(100, 0.1, 4, dt.date(2030, 6, 30), 'AAA')
-#print(bond.get_proxy_yield())
+# bond = Bond(100, 0.1, 4, dt.date(2030, 6, 30), 'AAA')
+# #print(bond.get_proxy_yield())
 
     
