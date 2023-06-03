@@ -1,4 +1,4 @@
-from Bond import Bond
+from .Bond import Bond
 from typing import Dict, Optional
 import datetime as dt
 
@@ -15,9 +15,9 @@ class ValuationPV:
         coupon_dates = self.bond.get_coupon_dates()
         number_periods = len(coupon_dates)
         discount_rate = self.bond.get_proxy_yield() if not discount_rate_specified else discount_rate_specified
-
+        
         #exit if discount rate not specified and no proxy found
-        if not discount_rate:
+        if discount_rate is None:
             print("No discount rate was specified and no proxy could be found.")
             return None
 
@@ -26,10 +26,13 @@ class ValuationPV:
         maturity_pv = self.bond.face_value * ((1+discount_rate)**(- number_periods))
         dirty_price = coupons_pv + maturity_pv
 
-        #substract accrued interest to get clean price
-        clean_price = dirty_price - self.bond.accrued_interest(
-            next_coupon_date=coupon_dates[0]
-        )
+        if self.bond.coupon_frequency == 0: #zero coupon no accrued interest
+            clean_price = dirty_price
+        else:
+            #substract accrued interest to get clean price
+            clean_price = dirty_price - self.bond.accrued_interest(
+                next_coupon_date=coupon_dates[0]
+            )
 
         return {
             "CleanPrice": clean_price,
@@ -37,6 +40,3 @@ class ValuationPV:
         }
     
 
-bond = Bond(100, 0.05, 4, dt.date(2030, 6, 30), 'AAA')
-val = ValuationPV(bond)
-print(val.price())

@@ -49,7 +49,8 @@ Application:
 FastAPI:
 - post endpoint, returns dirty & clean price (& any calculated inputs / assumptions)
 - posts request, response, dirty & clean prices in database
-- input validation (pydantic)
+- input validation eg old date, wrong date format, negative face value
+- handling for zero coupon bonds
 
 DB:
 - local postgres
@@ -63,4 +64,12 @@ DB:
 PART 3: DEPLOYMENT
 deta space for free? fastapi docs
 - will need to host separately - Heroku or AWS free tier
+
+
+
+
+
+
+to do:
+- zero coupon - why is it returning the face_value, not getting discounted?
 

@@ -38,7 +38,7 @@ def bond_present_value(
     
     coupon_dates.reverse()
     num_payments = len(coupon_dates)
-    coupon = face_value * interest_rate
+    coupon = (face_value * interest_rate) / coupon_frequency
 
     #calculate PV
     coupons_pv = coupon * ((1 - pow((1+discount_rate), - num_payments)) / discount_rate)

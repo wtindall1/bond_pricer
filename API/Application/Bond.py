@@ -1,7 +1,7 @@
 import datetime as dt
 from typing import Optional, Dict, List
 from dateutil.relativedelta import relativedelta
-from CreditRating import CreditRating
+from .CreditRating import CreditRating
 import requests
 import json
 
@@ -19,7 +19,12 @@ class Bond:
         self.interest_rate = interest_rate
         self.coupon_frequency = coupon_frequency
         self.maturity_date = maturity_date
-        self.coupon = self.face_value * self.interest_rate
+
+        #handling for zero coupon bonds
+        if self.coupon_frequency > 0:
+            self.coupon = (self.face_value * self.interest_rate) / self.coupon_frequency
+        else:
+            self.coupon = 0
 
         try:
             self.credit_rating = CreditRating(credit_rating)
@@ -31,6 +36,12 @@ class Bond:
 
     def get_coupon_dates(self) -> List[dt.date]:
         self.coupon_dates = []
+
+        #zero coupon bond, only pays out at maturity
+        if self.coupon_frequency == 0:
+            self.coupon_dates.append(self.maturity_date)
+            return self.coupon_dates
+
         date = self.maturity_date
         #work back from maturity date to find all future coupon dates (estimated)
         while date > dt.date.today():
