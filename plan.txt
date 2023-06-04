@@ -67,4 +67,7 @@ deta space for free? fastapi docs
 
 
 
-
+To do:
+- redo pv calc per cash flow, adjust for valuing midway through period
+- test calc against excel calcs
+- db setup 

@@ -106,7 +106,7 @@ class Bond:
         
         else:
             print("Request failed with status code:", response.status_code)
-            return
+            return None
         
         
 
