@@ -35,11 +35,10 @@ class Bond:
 
 
     def get_coupon_dates(self) -> List[dt.date]:
-        self.coupon_dates = []
+        self.coupon_dates: List[dt.date] = []
 
-        #zero coupon bond, only pays out at maturity
+        #zero coupon bond
         if self.coupon_frequency == 0:
-            self.coupon_dates.append(self.maturity_date)
             return self.coupon_dates
 
         date = self.maturity_date

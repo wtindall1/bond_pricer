@@ -28,7 +28,7 @@ async def price(request: BondPricingRequest):
     price = valuation.price(discount_rate_specified=request.discount_rate)
 
     response = BondPricingResponse(
-        id = uuid.uuid4(),
+        reference = uuid.uuid4(),
         clean_price=price["CleanPrice"],
         dirty_price=price["DirtyPrice"]
     )

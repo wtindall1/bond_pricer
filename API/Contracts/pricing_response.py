@@ -5,7 +5,7 @@ import uuid
 
 
 class BondPricingResponse(BaseModel):
-    id: uuid.UUID
+    reference: uuid.UUID
     clean_price: float
     dirty_price: float
 

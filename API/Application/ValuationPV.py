@@ -1,6 +1,7 @@
 from .Bond import Bond
 from typing import Dict, Optional
 import datetime as dt
+import numpy as np
 
 class ValuationPV:
 
@@ -12,10 +13,13 @@ class ValuationPV:
     def price(self, discount_rate_specified: Optional[float] = None) -> Optional[Dict[str, float]]:
 
         #INPUTS
-        coupon_dates = self.bond.get_coupon_dates()
+        coupon_dates = np.array(self.bond.get_coupon_dates())
 
-        #calculate number of periods until each coupon date, adj for frequency
-        coupon_dates_n_annual = [(date - dt.date.today()).days / 365 for date in coupon_dates]
+        #calculate number of (annual) periods until each coupon date
+        coupon_dates_n_annual = np.array([(date - dt.date.today()).days / 365 for date in coupon_dates])
+        #number of years until maturity date
+        n_maturity = (self.bond.maturity_date - dt.date.today()).days / 365
+
         
         discount_rate = self.bond.get_proxy_yield() if not discount_rate_specified else discount_rate_specified
         #exit if discount rate not specified and no proxy found
@@ -23,14 +27,17 @@ class ValuationPV:
             print("No discount rate was specified and no proxy could be found.")
             return None
         
-        #
-        
+        #discount coupon payments
+        coupons = np.array([self.bond.coupon for _ in range(len(coupon_dates))])
+        discounted_coupons = coupons / (1+discount_rate)**coupon_dates_n_annual
+    
+        print(coupon_dates, coupon_dates_n_annual)
 
         #calculate pv (dirty)
-        coupons_pv = self.bond.coupon * ((1 - (1+discount_rate)**(-number_periods)) / discount_rate)
-        maturity_pv = self.bond.face_value * ((1+discount_rate)**(-number_periods))
+        coupons_pv = sum(discounted_coupons)
+        maturity_pv = self.bond.face_value / (1+discount_rate)**n_maturity
         dirty_price = coupons_pv + maturity_pv
-
+        
         #calculate clean price
         if self.bond.coupon_frequency == 0: #zero coupon no accrued interest
             clean_price = dirty_price
@@ -41,8 +48,8 @@ class ValuationPV:
             )
 
         return {
-            "CleanPrice": clean_price,
-            "DirtyPrice": dirty_price
+            "CleanPrice": round(clean_price, 2),
+            "DirtyPrice": round(dirty_price, 2)
         }
     
 
