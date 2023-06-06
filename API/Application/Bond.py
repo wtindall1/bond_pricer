@@ -113,7 +113,5 @@ class Bond:
     
 
 
-# bond = Bond(100, 0.1, 4, dt.date(2030, 6, 30), 'AAA')
-# #print(bond.get_proxy_yield())
 
     

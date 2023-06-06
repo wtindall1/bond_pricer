@@ -49,12 +49,13 @@ Application:
 FastAPI:
 - post endpoint, returns dirty & clean price (& any calculated inputs / assumptions)
 - posts request, response, dirty & clean prices in database
+- rate limiting
 
 DB:
 - local postgres
 - SQLalchemy
-- requests table (raw request & fields mapped out)
 - responses table (raw response & fields mapped out)
+- db testing - pytest fixtures
 
 
 
@@ -66,8 +67,10 @@ deta space for free? fastapi docs
 
 
 
-
 To do:
-- redo pv calc per cash flow, adjust for valuing midway through period
-- test calc against excel calcs
-- db setup 
+//- api db functionality
+- Add more data to db & response
+- postgres db local
+- db function testing
+- add rating limiting
+- deployment

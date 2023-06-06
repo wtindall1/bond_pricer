@@ -1,11 +1,10 @@
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 from datetime import date
-import uuid
-
+from typing import Optional
 
 class BondPricingResponse(BaseModel):
-    reference: uuid.UUID
-    clean_price: float
-    dirty_price: float
+    reference: str
+    clean_price: Optional[float]
+    dirty_price: Optional[float]
 

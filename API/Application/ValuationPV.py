@@ -10,7 +10,7 @@ class ValuationPV:
 
     #discounts cash flows to return clean and dirty bond price
     #disount rate can be specified, proxy used if not
-    def price(self, discount_rate_specified: Optional[float] = None) -> Optional[Dict[str, float]]:
+    def price(self, discount_rate_specified: Optional[float] = None) -> Dict[str, Optional[float]]:
 
         #INPUTS
         coupon_dates = np.array(self.bond.get_coupon_dates())
@@ -25,13 +25,14 @@ class ValuationPV:
         #exit if discount rate not specified and no proxy found
         if discount_rate is None:
             print("No discount rate was specified and no proxy could be found.")
-            return None
+            return {
+                "CleanPrice": None,
+                "DirtyPrice": None,
+            }
         
         #discount coupon payments
         coupons = np.array([self.bond.coupon for _ in range(len(coupon_dates))])
         discounted_coupons = coupons / (1+discount_rate)**coupon_dates_n_annual
-    
-        print(coupon_dates, coupon_dates_n_annual)
 
         #calculate pv (dirty)
         coupons_pv = sum(discounted_coupons)
