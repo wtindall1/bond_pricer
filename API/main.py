@@ -64,7 +64,7 @@ async def create_price(request: BondPricingRequest, db: Session = Depends(get_db
 
     #valuation
     valuation = ValuationPV(bond)
-    price = valuation.price(discount_rate_specified=request.discount_rate)
+    price = valuation.price_with_simulated_yields()
     reference = str(uuid.uuid4())
 
 

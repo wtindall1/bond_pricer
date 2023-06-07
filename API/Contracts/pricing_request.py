@@ -9,4 +9,4 @@ class BondPricingRequest(BaseModel):
     coupon_frequency: int = Field(..., ge=0)
     maturity_date: date = Field(..., description="Date in format YYYY-MM-DD")
     credit_rating: str 
-    discount_rate: Optional[float] = None
+    #discount_rate: Optional[float] = None

@@ -4,6 +4,8 @@ from dateutil.relativedelta import relativedelta
 from .CreditRating import CreditRating
 import requests
 import json
+import numpy as np
+import pandas as pd
 
 class Bond:
 
@@ -106,6 +108,46 @@ class Bond:
         else:
             print("Request failed with status code:", response.status_code)
             return None
+        
+
+    def get_proxy_yield_time_series(self, credit_rating: CreditRating, years: int) -> pd.Series:
+
+        #match creditrating to FRED series_id
+        if "AAA" in self.credit_rating.value:
+            series_id = "BAMLC0A1CAAAEY"
+        elif "AA" in self.credit_rating.value:
+            series_id = "BAMLC0A2CAAEY"
+        elif "A" in self.credit_rating.value:
+            series_id = "BAMLC0A3CAEY"
+        elif "BBB" in self.credit_rating.value:
+            series_id = "BAMLC0A4CBBBEY"
+        elif "BB" in self.credit_rating.value:
+            series_id = "BAMLEM3BRRBBCRPIEY"
+        else:
+            series_id = "BAMLEMHBHYCRPIEY"
+
+
+
+        #get api key from config
+        with open("C:\\Users\\Will.Tindall\\Projects\\Bond_Pricer_Project\\config.json") as f:
+            config = json.load(f)
+        api_key = config["FRED_API_KEY"]
+
+        #give start observation date (will be using 20 years)
+        observation_start = dt.date.today() - dt.timedelta(weeks=years*52)
+
+
+        url = f"https://api.stlouisfed.org/fred/series/observations?series_id={series_id}&api_key={api_key}&file_type=json&observation_start={observation_start}"
+
+        response = requests.get(url)
+        data = response.json()
+        dates = [item["date"] for item in data["observations"]]
+        yields = [float(item["value"])/100 if item["value"] != '.' else np.nan for item in data["observations"]]
+
+
+        series = pd.Series(np.array(yields), index=dates)
+        
+        return series
         
         
 
