@@ -74,4 +74,5 @@ To do:
 //- try to break through swagger & handle the errors
 - postgres db local
 - add rate limiting
+- readme, remove plan & make repo public
 - deployment
