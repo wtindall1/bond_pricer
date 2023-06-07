@@ -68,9 +68,10 @@ deta space for free? fastapi docs
 
 
 To do:
-//- api db functionality
-- Add more data to db & response
+//- create MonteCarlo simulation class
+//- incorporate yield simulations into Valuation PV class 
+//- test the new calc - check behaviour eg compare price with credit ratings, maturities, coupon frequency
+//- try to break through swagger & handle the errors
 - postgres db local
-//- db function testing
-- add rating limiting
+- add rate limiting
 - deployment

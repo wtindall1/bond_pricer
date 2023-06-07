@@ -27,7 +27,7 @@ def get_db_session():
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Add ""/docs"" to the url to try the bond pricer"}
 
 
 

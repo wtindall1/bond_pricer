@@ -32,7 +32,7 @@ class CreditRating(str, Enum):
     D = "D"
     
 
-def get_yield_time_series(credit_rating: CreditRating, years: int):
+def get_yield_time_series(credit_rating: CreditRating, years:int):
 
     #using yield from bond indices with same or similar credit rating
     #assuming input bond maturity is same as index average, due to data limitations
