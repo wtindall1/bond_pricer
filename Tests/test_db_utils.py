@@ -4,8 +4,6 @@ sys.path.append("..")
 from API.DB import models, schemas, crud
 from API.DB.database import SessionLocal, Base, engine
 
-#create the db tables
-models.Base.metadata.create_all(bind=engine)
 
 @pytest.fixture(scope="module")
 def db_connection():

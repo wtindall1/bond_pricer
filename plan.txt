@@ -71,6 +71,6 @@ To do:
 //- api db functionality
 - Add more data to db & response
 - postgres db local
-- db function testing
+//- db function testing
 - add rating limiting
 - deployment
