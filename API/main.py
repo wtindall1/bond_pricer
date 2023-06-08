@@ -1,5 +1,8 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 from Contracts.pricing_request import BondPricingRequest
 from Contracts.pricing_response import BondPricingResponse
 from Application.Bond import Bond
@@ -12,7 +15,14 @@ import uuid
 #create the db tables
 models.Base.metadata.create_all(bind=engine)
 
+#rate limiting
+limiter = Limiter(key_func=get_remote_address)
+
 app = FastAPI()
+
+#add limiter to app and handler
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 
 #db dependency to provide session
@@ -32,7 +42,8 @@ async def root():
 
 
 @app.get("/bond_price/{reference}", response_model=BondPricingResponse)
-async def get_price(reference: str, db: Session = Depends(get_db_session)) -> BondPricingResponse:
+@limiter.limit("20/minute")
+async def get_price(request: Request, reference: str, db: Session = Depends(get_db_session)) -> BondPricingResponse:
     
     #query table for pricing
     db_bond_pricing = crud.get_bond_pricing(db, reference)
@@ -50,15 +61,16 @@ async def get_price(reference: str, db: Session = Depends(get_db_session)) -> Bo
     
 
 @app.post("/bond_price", response_model=BondPricingResponse)
-async def create_price(request: BondPricingRequest, db: Session = Depends(get_db_session)) -> BondPricingResponse:
+@limiter.limit("20/minute")
+async def create_price(request: Request, bond_request: BondPricingRequest, db: Session = Depends(get_db_session)) -> BondPricingResponse:
     
     #create bond object
     bond = Bond(
-        face_value=request.face_value,
-        interest_rate=request.interest_rate,
-        coupon_frequency=request.coupon_frequency,
-        maturity_date=request.maturity_date,
-        credit_rating=request.credit_rating
+        face_value=bond_request.face_value,
+        interest_rate=bond_request.interest_rate,
+        coupon_frequency=bond_request.coupon_frequency,
+        maturity_date=bond_request.maturity_date,
+        credit_rating=bond_request.credit_rating
     )
 
 

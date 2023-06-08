@@ -11,7 +11,7 @@ class BondPricingRequest(BaseModel):
     interest_rate: float = Field(..., ge=0)
     coupon_frequency: int = Field(..., ge=0, le=12)
     maturity_date: date = Field(..., description="Date in format YYYY-MM-DD")
-    credit_rating: str 
+    credit_rating: CreditRating 
 
     @validator("maturity_date", "credit_rating")
     def validate_fields(cls, value, field):
