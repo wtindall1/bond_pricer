@@ -72,7 +72,8 @@ To do:
 //- incorporate yield simulations into Valuation PV class 
 //- test the new calc - check behaviour eg compare price with credit ratings, maturities, coupon frequency
 //- try to break through swagger & handle the errors
-- postgres db local
-- add rate limiting
+//- add rate limiting
+- roll back session on test db
+- postgres db local - put API keys & db info in env variables (then add these to deta space environment)
+- deployment - db then app
 - readme, remove plan & make repo public
-- deployment

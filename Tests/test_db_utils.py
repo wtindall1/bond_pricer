@@ -2,20 +2,28 @@ import pytest
 import sys
 sys.path.append("..")
 from API.DB import models, schemas, crud
-from API.DB.database import SessionLocal, Base, engine
+import uuid
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+#connect to test db
+TEST_DB_URL = f"postgresql://postgres:{password}@localhost:5432/test_bond_pricing"
+engine = create_engine(TEST_DB_URL)
+TestSessionLocal = sessionmaker(bind=engine)
+
+#create the db tables
+models.Base.metadata.create_all(bind=engine)
 
 
 @pytest.fixture(scope="module")
 def db_connection():
-    db = SessionLocal()
+    db = TestSessionLocal()
     yield db
-    #undo changes so test records don't persist
-    db.rollback()
     db.close()
 
 @pytest.fixture(scope="module")
 def valid_bond_pricing():
-    valid_bond_pricing = schemas.BondPricingCreate(reference="ccb2cdc6-a648-4117-85b5-2d983266dca9", clean_price=100, dirty_price=101)
+    valid_bond_pricing = schemas.BondPricingCreate(reference=str(uuid.uuid4()), clean_price=100, dirty_price=101)
     return valid_bond_pricing
 
 class TestDBUtils:
