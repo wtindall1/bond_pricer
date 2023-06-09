@@ -5,8 +5,10 @@ from API.DB import models, schemas, crud
 import uuid
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import os
 
 #connect to test db
+password = os.environ.get("db_password")
 TEST_DB_URL = f"postgresql://postgres:{password}@localhost:5432/test_bond_pricing"
 engine = create_engine(TEST_DB_URL)
 TestSessionLocal = sessionmaker(bind=engine)
