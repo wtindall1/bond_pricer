@@ -74,6 +74,7 @@ To do:
 //- try to break through swagger & handle the errors
 //- add rate limiting
 //- test db for crud utils
-- postgres db local - put API keys & db info in env variables (then add these to deta space environment)
-- deployment - db then app
-- readme, remove plan & make repo public
+//put API keys & db info in env variables
+- postgres db local - create a new user with different password from superuser one (and change in activate.bat)
+- deployment - db then app (with db and api key env variables)
+- readme (full local setup guide inc db & env variables), remove plan & make repo public

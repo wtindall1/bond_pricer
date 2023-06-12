@@ -6,6 +6,7 @@ import requests
 import json
 import numpy as np
 import pandas as pd
+import os
 
 class Bond:
 
@@ -84,11 +85,8 @@ class Bond:
         else:
             series_id = "BAMLEMHBHYCRPIEY"
 
-
-        #get api key from config
-        with open("C:\\Users\\Will.Tindall\\Projects\\Bond_Pricer_Project\\config.json") as f:
-            config = json.load(f)
-        api_key = config["FRED_API_KEY"]
+        #get api key from env
+        api_key = os.environ.get("FRED_API_KEY")
 
         #request data from 1 week ago, so doesn't return whole timeseries
         observation_start = dt.date.today() - dt.timedelta(days=7)
@@ -128,10 +126,8 @@ class Bond:
 
 
 
-        #get api key from config
-        with open("C:\\Users\\Will.Tindall\\Projects\\Bond_Pricer_Project\\config.json") as f:
-            config = json.load(f)
-        api_key = config["FRED_API_KEY"]
+        #get api key from env
+        api_key = os.environ.get("FRED_API_KEY")
 
         #give start observation date (will be using 20 years)
         observation_start = dt.date.today() - dt.timedelta(weeks=years*52)
