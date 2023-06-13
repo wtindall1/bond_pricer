@@ -12,11 +12,8 @@ This is based on a 20 year historical yield time series for a bond index with si
 
 
 -- DEPLOYMENT INFORMATION --
--- URL --
+Deta space
+AWS
 
 
--- INSERT REQUIREMENTS.TXT --
-
--- INSTRUCTIONS TO RUN LOCALLY --
--- LOCAL DB SETUP --
 
