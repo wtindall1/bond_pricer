@@ -75,6 +75,7 @@ To do:
 //- add rate limiting
 //- test db for crud utils
 //put API keys & db info in env variables
-- postgres db local - create a new user with different password from superuser one (and change in activate.bat)
+//- postgres db local
+- aws fix timeout error
 - deployment - db then app (with db and api key env variables)
 - readme (full local setup guide inc db & env variables), remove plan & make repo public
