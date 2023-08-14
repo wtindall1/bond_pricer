@@ -11,9 +11,6 @@ Uses a monte carlo simulation to calculate the discount rate for coupons and pri
 This is based on a 20 year historical yield time series for a bond index with similar credit rating.
 
 
--- DEPLOYMENT INFORMATION --
-Deta space
-AWS
 
 
 
